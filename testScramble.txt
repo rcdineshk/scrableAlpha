@@ -1,0 +1,5 @@
+_A_
+__A__
+__E____
+ABCDEFG
+BIFAE_
