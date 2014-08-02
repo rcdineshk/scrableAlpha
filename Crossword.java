@@ -58,44 +58,18 @@ public class Crossword {
     static String searchInDictionary(String rack, HashMap<String, String> dictionary, int noOfBlankTiles) {
         String maxWord = "";
         int maxScore = 0;
-        String dictionaryWord, prev = "";
-
-        /*int max = Integer.MIN_VALUE;
-         for (int i = 0; i < dictionary.size(); i++) {
-         dictionaryWord = dictionary.get(i);
-         int noOfBlankTiles = 7 - inputString.length();
-         char letterArray[] = dictionaryWord.toCharArray();
-         Arrays.sort(letterArray);
-         String newDictionaryWord = new String(letterArray);
-
-         String matchedString = lcs(inputString, newDictionaryWord);
-         if (matchedString.length() == newDictionaryWord.length()
-         || matchedString.length() == newDictionaryWord.length() - noOfBlankTiles) {
-
-         score = calculateScore(matchedString);
-
-         }
-
-         if (score > max) {
-         maxWord = dictionaryWord;
-         max = score;
-         prev = dictionaryWord;
-         }
-
-         }*/
         
-        System.out.println(noOfBlankTiles);
         Iterator it = dictionary.keySet().iterator();
         String mismatchString = null;
         String backupRack = rack;
         while (it.hasNext()) {
-            
+
             int allowedMismatch = noOfBlankTiles;
             String word = it.next().toString();
             String pattern = dictionary.get(word);
             String mismatchLetters = "";
             int position = Integer.parseInt("" + pattern.charAt(0));
-            
+
             rack = backupRack;
             for (int i = 0; i < word.length(); i++) {
                 if (i == position) {
@@ -104,12 +78,12 @@ public class Crossword {
                 if (!rack.contains("" + word.charAt(i))) {
                     allowedMismatch--;
                     mismatchLetters += word.charAt(i);
-                   } else {
-                    rack = rack.replace(word.charAt(i),'*');
-                     
+                } else {
+                    rack = rack.replace(word.charAt(i), '*');
+
                 }
             }
-            
+
             if (allowedMismatch >= 0) {
                 int score = calculateScore(word, mismatchLetters);
                 if (score > maxScore) {
@@ -117,11 +91,11 @@ public class Crossword {
                     maxScore = score;
                     mismatchString = mismatchLetters;
                 }
-                
+
             }
         }
 
-        return maxWord+" - " +maxScore;
+        return maxWord + " - " + maxScore;
     }
 
     static int calculateScore(String word, String mismatchLetters) {
@@ -132,7 +106,7 @@ public class Crossword {
         for (int i = 0; i < word.length(); i++) {
             sum += score[word.charAt(i) - 'A'];
         }
-        
+
         for (int i = 0; i < mismatchLetters.length(); i++) {
             sum -= score[mismatchLetters.charAt(i) - 'A'];
         }
@@ -146,28 +120,6 @@ public class Crossword {
 
     }
 
-    /*public static String getWordsWithFixedAlpha(String alpha, int length, int position, List<String> dictionary) {
-     Iterator<String> iter = dictionary.iterator();
-     int maxScore = 0;
-     String maxScoreWord = "";
-
-     while (iter.hasNext()) {
-     String word = iter.next();
-
-     if (word.indexOf(alpha) >= 0 && word.indexOf(alpha) <= position
-     && word.length() <= length) {
-     int score = calculateScore(word);
-
-     if (score > maxScore) {
-     maxScore = score;
-     maxScoreWord = word;
-     }
-     }
-     }
-
-     return maxScoreWord + "," + maxScore;
-
-     }*/
     public static String getAlpha(String input) {
         return input.replaceAll("_", "");
     }
@@ -245,9 +197,7 @@ public class Crossword {
             position = getAlphaPosition(alpha, pattern);
             length = rack.length();
             matchedPatterns = possiblePatterns(position, pattern.length(), alpha);
-            System.out.println(matchedPatterns);
             matchedWords = matchedWordsDictionary(dictionary, matchedPatterns);
-            //System.out.println(matchedWords);
             String winningWord = searchInDictionary(rack, matchedWords, 7 - length);
             System.out.println(winningWord);
         }
