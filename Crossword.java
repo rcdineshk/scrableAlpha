@@ -136,13 +136,15 @@ public class Crossword {
 	}
 
 	public static String getAlpha(String input) {
-		int i = 0;
-		for (i = 0; i < input.length(); i++) {
-			if (input.charAt(i) != '_')
-				break;
-		}
+//		int i = 0;
+//		for (i = 0; i < input.length(); i++) {
+//			if (input.charAt(i) != '_')
+//				break;
+//		}
+		
+		input = input.replaceAll("_", "");
 
-		return input.charAt(i) + "";
+		return input;
 	}
 
 	public static int getAlphaPosition(String alpha, String scrambledWord) {
@@ -162,9 +164,8 @@ public class Crossword {
 
 		while (sc.hasNextLine()) {
 			String scrambledWord = sc.nextLine();
-			String[] input = scrambledWord.split("[_]");
-			if (input.length > 1) {
-
+		
+			if (scrambledWord.contains("_")) {
 				alpha = getAlpha(scrambledWord);
 				position = getAlphaPosition(alpha, scrambledWord);
 				length = scrambledWord.length();
